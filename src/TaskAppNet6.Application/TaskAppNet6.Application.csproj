@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TaskAppNet6.Core\TaskAppNet6.Core.csproj" />
+    <ProjectReference Include="..\TaskAppNet6.Persistence\TaskAppNet6.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

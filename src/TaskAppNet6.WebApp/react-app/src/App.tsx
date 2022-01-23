@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Route, Routes} from 'react-router-dom';
+import {ListToDoTasksPage} from "./pages/todo-tasks/ListToDoTasksPage";
+import {CreateToDoTaskPage} from "./pages/todo-tasks/CreateToDoTaskPage";
+import {EditToDoTaskPage} from "./pages/todo-tasks/EditToDoTaskPage";
+import {DetailToDoTaskPage} from "./pages/todo-tasks/DetailToDoTaskPage";
+import styled from "styled-components";
+import {Header} from "./components/layout/Header";
+
+
+const BaseContainer = styled.div`
+    display: flex;
+    justify-content: center;
+
+`;
+const WidthRestrictionContainer = styled.div`
+    width: 100%;
+    max-width: 1248px;
+    
+    margin-top: 64px;
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (<BaseContainer>
+        <WidthRestrictionContainer>
+            <Header />
+            <Routes>
+                <Route path="/" element={<ListToDoTasksPage/>}/>
+                <Route path="/create" element={<CreateToDoTaskPage/>}/>
+                <Route path="/edit/:id" element={<EditToDoTaskPage/>}/>
+                <Route path="/detail/:id" element={<DetailToDoTaskPage/>}/>
+            </Routes>
+        </WidthRestrictionContainer>
+    </BaseContainer>);
 }
 
 export default App;
