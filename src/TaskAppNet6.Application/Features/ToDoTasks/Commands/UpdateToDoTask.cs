@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TaskAppNet6.Core.Entities;
 using TaskAppNet6.Persistence;
 
 namespace TaskAppNet6.Application.Features.ToDoTasks.Commands
@@ -28,7 +29,7 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Commands
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
             {
                 var task = await _dbContext.ToDoTasks.FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
-                if (task is null)
+                if (task is null || task.Status == ToDoTaskStatus.Completed)
                     return false;
 
                 task.Name = request.Name;
