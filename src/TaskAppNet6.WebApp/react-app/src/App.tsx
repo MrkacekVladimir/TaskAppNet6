@@ -15,21 +15,26 @@ const BaseContainer = styled.div`
 `;
 const WidthRestrictionContainer = styled.div`
     width: 100%;
-    max-width: 1248px;
-    
-    margin-top: 64px;
+    max-width: 1280px;
 `;
 
-function App() {
+const ContentContainer = styled.div`
+    padding: 0 16px;
+`;
+
+const App: React.FC = () => {
+
     return (<BaseContainer>
         <WidthRestrictionContainer>
-            <Header />
-            <Routes>
-                <Route path="/" element={<ListToDoTasksPage/>}/>
-                <Route path="/create" element={<CreateToDoTaskPage/>}/>
-                <Route path="/edit/:id" element={<EditToDoTaskPage/>}/>
-                <Route path="/detail/:id" element={<DetailToDoTaskPage/>}/>
-            </Routes>
+            <Header/>
+            <ContentContainer>
+                <Routes>
+                    <Route path="/" element={<ListToDoTasksPage/>}/>
+                    <Route path="/create" element={<CreateToDoTaskPage/>}/>
+                    <Route path="/edit/:id" element={<EditToDoTaskPage/>}/>
+                    <Route path="/detail/:id" element={<DetailToDoTaskPage/>}/>
+                </Routes>
+            </ContentContainer>
         </WidthRestrictionContainer>
     </BaseContainer>);
 }

@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {GlobalStyles} from "./globalStyles";
+import {Toaster} from "react-hot-toast";
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <GlobalStyles/>
+            <Toaster position={"bottom-right"}/>
             <App/>
         </BrowserRouter>
     </React.StrictMode>,

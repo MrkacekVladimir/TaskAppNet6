@@ -5,16 +5,28 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaskAppNet6.Application.Features.ToDoTasks.Commands;
 using TaskAppNet6.Persistence;
+using TaskAppNet6.Persistence.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddMediatR(typeof(CreateToDoTask).Assembly);
-builder.Services.AddDbContext<ApplicationDbContext>(options => { options.UseInMemoryDatabase("ToDoTasksTestingDatabase"); });
-builder.Services.AddSwaggerGen(options =>
+
+builder.Services.AddScoped<AuditEntityInterceptor>();
+builder.Services.AddDbContext<ApplicationDbContext>((services, options) =>
 {
-    options.CustomSchemaIds(x => x.FullName);
+    var auditInterceptor = services.GetRequiredService<AuditEntityInterceptor>();
+    options.AddInterceptors(auditInterceptor);
+
+    options.UseInMemoryDatabase("ToDoTasksTestingDatabase");
+});
+builder.Services.AddSwaggerGen(options => { options.CustomSchemaIds(x => x.FullName); });
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin());
 });
 var app = builder.Build();
 
@@ -29,10 +41,7 @@ app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.UseCors();
+app.MapControllers();
 app.MapFallbackToFile("index.html");
-
 app.Run();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Queries
 
         public record Response(int TotalCount, List<ListItem> Items);
 
-        public record ListItem(int Id, string Name, string Description, int Priority, ToDoTaskStatus Status);
+        public record ListItem(int Id, string Name, string Description, int Priority, ToDoTaskStatus Status, DateTime CreatedOn);
 
         public class Handler : IRequestHandler<Query, Response>
         {
@@ -45,7 +46,7 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Queries
 
                 var tasks = await tasksQuery.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .Select(t => new ListItem(t.Id, t.Name, t.Description, t.Priority, t.Status))
+                    .Select(t => new ListItem(t.Id, t.Name, t.Description, t.Priority, t.Status, t.CreatedOn))
                     .ToListAsync(cancellationToken);
 
                 return new Response(totalCount, tasks);

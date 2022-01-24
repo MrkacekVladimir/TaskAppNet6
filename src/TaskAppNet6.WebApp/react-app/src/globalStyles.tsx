@@ -1,11 +1,6 @@
-import React from "react";
 import {createGlobalStyle} from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
-    * {
-        box-sizing: border-box;
-    }
-
     /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -53,5 +48,15 @@ export const GlobalStyles = createGlobalStyle`
     table {
         border-collapse: collapse;
         border-spacing: 0;
+    }
+
+    /* END OF RESET */
+    
+    * {
+        box-sizing: border-box;
+    }
+    
+    body{
+        font-family: "Montserrat", sans-serif;
     }
 `;

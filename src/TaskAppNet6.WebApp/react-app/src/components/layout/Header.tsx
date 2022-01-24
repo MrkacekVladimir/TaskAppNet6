@@ -5,9 +5,12 @@ import {NavLink} from "react-router-dom";
 const BaseContainer = styled.nav`
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
     
-    padding: 8px 16px;
+    padding: 24px 16px;
+    margin-bottom: 24px;
+    
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
 `;
 
 const StyledNavLink = styled(NavLink)`

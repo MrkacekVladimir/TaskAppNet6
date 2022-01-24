@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Queries
             public int Id { get; }
         }
 
-        public record Response(int Id, string Name, string Description, int Priority, ToDoTaskStatus Status);
+        public record Response(int Id, string Name, string Description, int Priority, ToDoTaskStatus Status, DateTime CreatedOn, DateTime? LastModifiedOn);
 
         public class Handler : IRequestHandler<Query, Response?>
         {
@@ -34,7 +35,7 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Queries
             public Task<Response?> Handle(Query request, CancellationToken cancellationToken)
                 => _dbContext.ToDoTasks
                     .AsNoTracking()
-                    .Select(t => new Response(t.Id, t.Name, t.Description, t.Priority, t.Status))
+                    .Select(t => new Response(t.Id, t.Name, t.Description, t.Priority, t.Status, t.CreatedOn, t.LastModifiedOn))
                     .FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
         }
     }

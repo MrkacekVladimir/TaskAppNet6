@@ -1,6 +1,6 @@
 namespace TaskAppNet6.Core.Entities
 {
-    public class ToDoTask
+    public class ToDoTask: BaseEntity
     {
         /// <summary>
         ///     Private constructor for EF Core Activator.
@@ -26,8 +26,8 @@ namespace TaskAppNet6.Core.Entities
 
     public enum ToDoTaskStatus
     {
-        Initial = 0,
-        InProgress = 1,
+        Initial = 1,
+        InProgress = 2,
         Completed = 3
     }
 }
