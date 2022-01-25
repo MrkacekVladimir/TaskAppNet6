@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TaskAppNet6.Core\TaskAppNet6.Core.csproj" />
+  </ItemGroup>
+
 </Project>

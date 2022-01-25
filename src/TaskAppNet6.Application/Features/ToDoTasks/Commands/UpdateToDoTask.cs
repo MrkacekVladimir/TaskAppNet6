@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -29,8 +30,11 @@ namespace TaskAppNet6.Application.Features.ToDoTasks.Commands
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
             {
                 var task = await _dbContext.ToDoTasks.FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
-                if (task is null || task.Status == ToDoTaskStatus.Completed)
+                if (task is null)
                     return false;
+
+                if (task.Status == ToDoTaskStatus.Completed)
+                    throw new InvalidOperationException("Completed status cannot be modified.");
 
                 task.Name = request.Name;
                 task.Description = request.Description;

@@ -7,7 +7,7 @@ import {toast} from "react-hot-toast";
 import {formatDateTime} from "../../utils/time";
 import {ActionButton} from "../../components/buttons/ActionButton";
 import {updateToDoTaskStatus} from "./api/updateToDoTaskStatus";
-import {ToDoTaskStatusHelper} from "./api/types/taskStatus";
+import {ToDoTaskStatus, ToDoTaskStatusHelper} from "./api/types/taskStatus";
 import {deleteToDoTask} from "./api/deleteToDoTask";
 
 const BaseContainer = styled.div``;
@@ -75,7 +75,7 @@ export const DetailToDoTaskPage: React.FC = () => {
         fetchData();
     }, [id]);
 
-    const setStatus = async (status: number) => {
+    const setStatus = async (status: ToDoTaskStatus) => {
         const response = await updateToDoTaskStatus(id!, status);
         const success = response.data;
         if (success) {
@@ -136,10 +136,10 @@ export const DetailToDoTaskPage: React.FC = () => {
             </InformationListItem>
         </InformationList>
         <ButtonsContainer>
-            {data.status !== 1 && <ActionButton text="Mark as Initial" action={() => setStatus(1)}/>}
-            {data.status !== 2 && <ActionButton text="Mark as In Progress" action={() => setStatus(2)}/>}
-            {data.status !== 3 && <ActionButton text="Mark as Completed" action={() => setStatus(3)}/>}
-            {data.status !== 3 && <ActionButton text="Edit" action={() => navigate(`/edit/${data.id}`)}/>}
+            {(data.status !== ToDoTaskStatus.Initial && data.status !== ToDoTaskStatus.Completed ) && <ActionButton text="Mark as Initial" action={() => setStatus(ToDoTaskStatus.Initial)}/>}
+            {(data.status !== ToDoTaskStatus.InProgress && data.status !== ToDoTaskStatus.Completed ) && <ActionButton text="Mark as In Progress" action={() => setStatus(ToDoTaskStatus.InProgress)}/>}
+            {data.status !== ToDoTaskStatus.Completed && <ActionButton text="Mark as Completed" action={() => setStatus(ToDoTaskStatus.Completed)}/>}
+            {data.status !== ToDoTaskStatus.Completed && <ActionButton text="Edit" action={() => navigate(`/edit/${data.id}`)}/>}
             <ActionButton text="Delete" action={handleDelete}/>
         </ButtonsContainer>
 

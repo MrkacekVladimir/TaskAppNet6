@@ -1,6 +1,8 @@
+using System;
+
 namespace TaskAppNet6.Core.Entities
 {
-    public class ToDoTask: BaseEntity
+    public class ToDoTask : BaseEntity
     {
         /// <summary>
         ///     Private constructor for EF Core Activator.
@@ -20,7 +22,20 @@ namespace TaskAppNet6.Core.Entities
         public int Id { get; private set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Priority { get; set; }
+
+        private int _priority = 1;
+        public int Priority
+        {
+            get => _priority;
+            set
+            {
+                if (value < 1 || value > 5)
+                    throw new ArgumentOutOfRangeException(nameof(Priority), "Priority must be from 1 to 5");
+
+                _priority = value;
+            }
+        }
+
         public ToDoTaskStatus Status { get; set; }
     }
 

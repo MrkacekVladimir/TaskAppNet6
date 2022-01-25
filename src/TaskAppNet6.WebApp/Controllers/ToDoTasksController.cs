@@ -16,7 +16,7 @@ namespace TaskAppNet6.WebApp.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<GetToDoTasksDetail.Response>> Get(int id)
         {
             var query = new GetToDoTasksDetail.Query(id);
@@ -34,7 +34,7 @@ namespace TaskAppNet6.WebApp.Controllers
             return CreatedAtAction(nameof(Get), new {id = response}, response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<int>> Update(int id, [FromBody] UpdateToDoTask.Command command)
         {
             command.Id = id;
@@ -46,7 +46,7 @@ namespace TaskAppNet6.WebApp.Controllers
         }
 
 
-        [HttpPut("{id}/status")]
+        [HttpPut("{id:int}/status")]
         public async Task<ActionResult<int>> UpdateStatus(int id, [FromBody] UpdateToDoTaskStatus.Command command)
         {
             command.Id = id;
@@ -57,7 +57,7 @@ namespace TaskAppNet6.WebApp.Controllers
             return Ok(wasUpdated);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteToDoTask.Command(id);
