@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, {useMemo} from "react";
 
 const BaseContainer = styled.div`
     display: flex;
@@ -47,7 +47,7 @@ export interface PaginationProps {
 
 export const Pagination: React.FC<PaginationProps> = (props) => {
     const {totalCount, pageNumber, setPageNumber, pageSize, setPageSize} = props;
-    const totalPages = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1;
+    const totalPages = useMemo(() => totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1, [totalCount, pageSize]);
 
     return <BaseContainer>
         <ButtonsContainer>
